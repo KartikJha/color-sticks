@@ -1,5 +1,0 @@
-interface GameObject {
-
-}
-
-export GameObject;
