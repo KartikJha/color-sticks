@@ -1,40 +1,45 @@
 import Player from "./Player";
 import Level from "./Level";
 
-class GameManager  {
-  // ctx: CanvasRenderingContext2D;
-  constructor(level: Level, canvas: HTMLCanvasElement) {
+class GameManager {
+  public constructor(level: Level, canvas: HTMLCanvasElement) {
     if (!canvas.getContext) {
       console.warn("Canvas not supported");
       return;
     }
     if (!level.listOfColorStick.length) {
-      console.error('Empty level');
+      console.error("Empty level");
       return;
     }
     const playerPosition = level.listOfColorStick[0].position;
     const player = new Player(playerPosition);
-    this.draw(level, <CanvasRenderingContext2D> canvas.getContext("2d"), player);
+    this.draw(
+      level,
+      canvas.getContext("2d") as CanvasRenderingContext2D,
+      player
+    );
   }
 
-  draw(
+  public draw(
     level: Level,
     canvasContext: CanvasRenderingContext2D,
     player: Player
-  ) {
-    level.listOfColorStick.forEach(colorStick => {
+  ): undefined {
+    level.getListOfColorStick.forEach((colorStick): undefined => {
       colorStick.draw(canvasContext);
-    });    
+    });
     player.draw(canvasContext);
-    requestAnimationFrame(() => this.draw(level, canvasContext, player));
-  };
-
-  /**
-   * @todo 
-   */
-  handleUserInput() {
-
+    requestAnimationFrame((): undefined =>
+      this.draw(level, canvasContext, player)
+    );
   }
+
+  // /**
+  //  * @todo
+  //  */
+  // handleUserInput() {
+  //   // PYNX
+  // }
 }
 
 export default GameManager;

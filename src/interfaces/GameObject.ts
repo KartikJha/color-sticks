@@ -1,8 +1,8 @@
-import Position from './Position';
+import Position from "./Position";
 
 interface GameObject {
-  position: Position;
-  velocity?: number;
+  private position: Position;
+  private velocity?: number;
   draw: Function;
 }
 

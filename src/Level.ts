@@ -1,13 +1,13 @@
-import ColorStick from './ColorStick';
+import ColorStick from "./ColorStick";
 
 class Level {
-  listOfColorStick: Array<ColorStick>;
+  private listOfColorStick: ColorStick[];
 
-  constructor(listOfColorStick: Array<ColorStick>) {
+  public constructor(listOfColorStick: ColorStick[]) {
     this.listOfColorStick = listOfColorStick;
   }
 
-  get listOfColorStickV() {
+  public get getListOfColorStick(): ColorStick[] {
     return this.listOfColorStick;
   }
 }
