@@ -8,7 +8,11 @@ export default class Player implements GameObject {
     this.position = position;
   }
 
-  public draw(context: CanvasRenderingContext2D): undefined {
+  public getPosition(): Position {
+    return this.position;
+  }
+
+  public draw(context: CanvasRenderingContext2D): void {
     const { x, y } = this.position;
     context.fillRect(x, y, 30, 30);
   }

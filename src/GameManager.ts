@@ -1,5 +1,6 @@
 import Player from "./Player";
 import Level from "./Level";
+import ColorStick from "./ColorStick";
 
 class GameManager {
   public constructor(level: Level, canvas: HTMLCanvasElement) {
@@ -7,11 +8,11 @@ class GameManager {
       console.warn("Canvas not supported");
       return;
     }
-    if (!level.listOfColorStick.length) {
+    if (!level.getListOfColorStick().length) {
       console.error("Empty level");
       return;
     }
-    const playerPosition = level.listOfColorStick[0].position;
+    const playerPosition = level.getListOfColorStick()[0].getPosition();
     const player = new Player(playerPosition);
     this.draw(
       level,
@@ -24,22 +25,13 @@ class GameManager {
     level: Level,
     canvasContext: CanvasRenderingContext2D,
     player: Player
-  ): undefined {
-    level.getListOfColorStick.forEach((colorStick): undefined => {
+  ): void {
+    level.getListOfColorStick().forEach((colorStick: ColorStick): void => {
       colorStick.draw(canvasContext);
     });
     player.draw(canvasContext);
-    requestAnimationFrame((): undefined =>
-      this.draw(level, canvasContext, player)
-    );
+    requestAnimationFrame((): void => this.draw(level, canvasContext, player));
   }
-
-  // /**
-  //  * @todo
-  //  */
-  // handleUserInput() {
-  //   // PYNX
-  // }
 }
 
 export default GameManager;

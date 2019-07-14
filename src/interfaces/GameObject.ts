@@ -1,8 +1,8 @@
 import Position from "./Position";
 
 interface GameObject {
-  private position: Position;
-  private velocity?: number;
+  getPosition: () => Position;
+  velocity?: number;
   draw: Function;
 }
 

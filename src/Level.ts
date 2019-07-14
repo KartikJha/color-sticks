@@ -7,7 +7,7 @@ class Level {
     this.listOfColorStick = listOfColorStick;
   }
 
-  public get getListOfColorStick(): ColorStick[] {
+  public getListOfColorStick(): ColorStick[] {
     return this.listOfColorStick;
   }
 }

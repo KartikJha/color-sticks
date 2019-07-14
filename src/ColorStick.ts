@@ -11,7 +11,15 @@ export default class ColorStick implements GameObject {
     this.stickLength = stickLength;
   }
 
-  public draw(context: CanvasRenderingContext2D): undefined {
+  public getPosition(): Position {
+    return this.position;
+  }
+
+  public getStickLength(): number {
+    return this.stickLength;
+  }
+
+  public draw(context: CanvasRenderingContext2D): void {
     context.strokeRect(
       this.position.x,
       this.position.y,
