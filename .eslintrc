@@ -1,0 +1,8 @@
+{
+  "rules": {
+    "@typescript-eslint/indent": "off"
+  },
+  "parser": "@typescript-eslint/parser",
+  "extends": ["plugin:@typescript-eslint/recommended", "plugin:prettier/recommended"],
+  "plugins": ["@typescript-eslint"]
+}
