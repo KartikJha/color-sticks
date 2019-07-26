@@ -2,8 +2,8 @@ import Position from "./Position";
 
 interface GameObject {
   getPosition: () => Position;
-  velocity?: number;
   draw: Function;
+  clear: Function;
 }
 
 export default GameObject;

@@ -1,6 +1,7 @@
 import Player from "./Player";
 import Level from "./Level";
 import ColorStick from "./ColorStick";
+import { CANVAS_DIMENSION } from "./constant";
 
 class GameManager {
   public constructor(level: Level, canvas: HTMLCanvasElement) {
@@ -26,11 +27,30 @@ class GameManager {
     canvasContext: CanvasRenderingContext2D,
     player: Player
   ): void {
+    /**
+     * draw each colorstick and
+     * update its position for next redraw
+     */
+    canvasContext.clearRect(
+      0,
+      0,
+      CANVAS_DIMENSION.width,
+      CANVAS_DIMENSION.height
+    );
     level.getListOfColorStick().forEach((colorStick: ColorStick): void => {
+      // colorStick.clear(canvasContext);
       colorStick.draw(canvasContext);
+      colorStick.updatePosition();
     });
     player.draw(canvasContext);
-    requestAnimationFrame((): void => this.draw(level, canvasContext, player));
+    setTimeout(
+      (): void =>
+        requestAnimationFrame((): void =>
+          this.draw(level, canvasContext, player)
+        ),
+      140
+    );
+    // requestAnimationFrame((): void => this.draw(level, canvasContext, player));
   }
 }
 
