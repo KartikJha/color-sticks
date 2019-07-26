@@ -7,9 +7,9 @@ const intializeGame = (): boolean => {
   // GameManager will be responsible for controlling the
   // gameplay
   const level: Level = new Level([
-    new ColorStick({ x: 10, y: 10 }, 40),
-    new ColorStick({ x: 60, y: 10 }, 50),
-    new ColorStick({ x: 10, y: 60 }, 70)
+    new ColorStick({ x: 10, y: 10 }, 40, 2),
+    new ColorStick({ x: 60, y: 60 }, 50, 3),
+    new ColorStick({ x: 10, y: 110 }, 70, -1)
   ]);
 
   const canvas = document.getElementById(CANVAS_ID) as HTMLCanvasElement;
