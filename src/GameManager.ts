@@ -1,7 +1,8 @@
-import Player from "./Player";
+import Player from "./Player/Player";
 import Level from "./Level";
 import ColorStick from "./ColorStick";
 import { CANVAS_DIMENSION } from "./constant";
+import PlayerInputHandler from "./Player/PlayerInputHandler";
 
 class GameManager {
   public constructor(level: Level, canvas: HTMLCanvasElement) {
@@ -13,24 +14,26 @@ class GameManager {
       console.error("Empty level");
       return;
     }
-    const playerPosition = level.getListOfColorStick()[0].getPosition();
-    const player = new Player(playerPosition);
+    // const playerPosition = level.getListOfColorStick()[0].getPosition();
+    const player = new Player();
+    // player
     this.draw(
       level,
       canvas.getContext("2d") as CanvasRenderingContext2D,
-      player
+      new PlayerInputHandler(player)
     );
   }
 
   public draw(
     level: Level,
     canvasContext: CanvasRenderingContext2D,
-    player: Player
+    playerWithInputHandler: PlayerInputHandler
   ): void {
     /**
      * draw each colorstick and
      * update its position for next redraw
      */
+    const player = playerWithInputHandler.targetObject;
     canvasContext.clearRect(
       0,
       0,
@@ -42,14 +45,16 @@ class GameManager {
       colorStick.draw(canvasContext);
       colorStick.updatePosition();
     });
+    playerWithInputHandler.reactToBufferedInputs();
     player.draw(canvasContext);
-    setTimeout(
-      (): void =>
-        requestAnimationFrame((): void =>
-          this.draw(level, canvasContext, player)
-        ),
-      140
-    );
+    // setTimeout(
+    //   (): number =>
+    //     requestAnimationFrame((): void =>
+    //       this.draw(level, canvasContext, playerWithInputHandler)
+    //     ),
+    //     250
+    // );
+    setTimeout((): void => this.draw(level, canvasContext, playerWithInputHandler), 250)
     // requestAnimationFrame((): void => this.draw(level, canvasContext, player));
   }
 }
