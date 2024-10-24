@@ -12,7 +12,7 @@ class PlayerInputHandler implements InputHandler {
     document.addEventListener('keydown', event => this.inputBuffer.push(event))
   }
 
-  reactToBufferedInputs (): void {
+  reactToBufferedInputs(): void {
     this.inputBuffer.forEach(this.inputHandler.bind(this));
     this.inputBuffer = [];
   }

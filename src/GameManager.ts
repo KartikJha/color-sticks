@@ -54,7 +54,7 @@ class GameManager {
     //     ),
     //     250
     // );
-    setTimeout((): void => this.draw(level, canvasContext, playerWithInputHandler), 250)
+    setTimeout((): void => this.draw(level, canvasContext, playerWithInputHandler), 140)
     // requestAnimationFrame((): void => this.draw(level, canvasContext, player));
   }
 }
