@@ -5,17 +5,18 @@ import { CANVAS_DIMENSION } from "./constant";
 import PlayerInputHandler from "./Player/PlayerInputHandler";
 
 class GameManager {
-  public constructor(level: Level, canvas: HTMLCanvasElement) {
+  public constructor(canvas: HTMLCanvasElement) {
     if (!canvas.getContext) {
       console.warn("Canvas not supported");
       return;
     }
-    if (!level.getListOfColorStick().length) {
-      console.error("Empty level");
-      return;
-    }
+    // if (!level.getListOfColorStick().length) {
+    //   console.error("Empty level");
+    //   return;
+    // }
     // const playerPosition = level.getListOfColorStick()[0].getPosition();
     const player = new Player();
+    const level = new Level();
     // player
     this.draw(
       level,
@@ -33,7 +34,6 @@ class GameManager {
      * draw each colorstick and
      * update its position for next redraw
      */
-    const player = playerWithInputHandler.targetObject;
     canvasContext.clearRect(
       0,
       0,
@@ -45,8 +45,16 @@ class GameManager {
       colorStick.draw(canvasContext);
       colorStick.updatePosition();
     });
+    const player = playerWithInputHandler.targetObject;
     playerWithInputHandler.reactToBufferedInputs();
     player.draw(canvasContext);
+    // player falling vertically
+    if (player.getPosition().y + 2 < CANVAS_DIMENSION.height)
+      player.updatePosition({...player.getPosition(), y: player.getPosition().y + 2 })
+    else {
+      level.moveToNextLevel();
+      player.resetPlayerPosition();
+    }
     // setTimeout(
     //   (): number =>
     //     requestAnimationFrame((): void =>

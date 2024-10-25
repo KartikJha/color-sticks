@@ -25,4 +25,8 @@ export default class Player implements GameObject {
   public updatePosition(position: Position) {
     this.position = position;
   }
+
+  public resetPlayerPosition() {
+    this.position = {x: 0, y: 0};
+  }
 }
