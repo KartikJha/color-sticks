@@ -27,6 +27,7 @@ class PlayerInputHandler implements InputHandler {
         break
       case 'ArrowDown':
         // this.targetObject.updatePosition()
+        this.targetObject.updatePosition({...position, y: position.y + 5})
         console.log('Down arrow pressed')
         break
       case 'ArrowLeft':
