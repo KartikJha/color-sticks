@@ -61,17 +61,9 @@
         text-align: center;
       }
 
-      .ui-box h2 {
+      .ui-box h2, .ui-box p, .ui-box .warning {
+        display: block;
         color: limegreen;
-        font-size: 24px; /* Bigger and cartoon-like */
-        margin-bottom: 20px;
-      }
-
-      .ui-box p {
-        color: limegreen;
-        font-size: 20px; /* Bigger text */
-        line-height: 1.5;
-        margin-bottom: 15px;
       }
 
       .ui-box .warning {
@@ -81,7 +73,20 @@
         font-weight: bold;
       }
 
-      /* Responsive design */
+      /* Hide instructions and show "Not for mobile devices" on mobile */
+      @media (max-width: 768px) {
+        .ui-box h2, .ui-box p, .ui-box .warning {
+          display: none; /* Hide game instructions */
+        }
+        .ui-box::before {
+          content: "Not for mobile devices, please use a laptop or desktop with physical input support"; /* Display message for mobile */
+          color: red;
+          font-size: 22px;
+          font-weight: bold;
+        }
+      }
+
+      /* Responsive design for larger screens */
       @media (min-width: 768px) {
         .container {
           flex-direction: row;
@@ -89,6 +94,7 @@
         #canvas {
           margin-right: 20px;
           margin-bottom: 0;
+          margin-top: 0px;
         }
         .ui-box {
           width: 300px;
@@ -109,5 +115,5 @@
     </div>
 
     <script type="text/javascript" src="bundle.js"></script>
-  </body>
+</body>
 </html>
