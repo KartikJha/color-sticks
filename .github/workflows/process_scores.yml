@@ -1,0 +1,97 @@
+name: Process Highscores
+
+on:
+  push:
+    paths:
+      - 'temp_scores.json'
+
+jobs:
+  update-highscores:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Merge and Sort Scores
+        run: |
+          python -c "
+          import json
+          import os
+
+          # Define file paths
+          TEMP_FILE = 'temp_scores.json'
+          HIGHSCORES_FILE = 'highscores.json'
+
+          # Read temp scores
+          try:
+              if os.path.exists(TEMP_FILE):
+                  with open(TEMP_FILE, 'r') as f:
+                      content = f.read().strip()
+                      # Handle empty file or empty array
+                      if not content:
+                          new_scores = []
+                      else:
+                          new_scores = json.loads(content)
+                          if not isinstance(new_scores, list):
+                              new_scores = [new_scores] # Handle single object if not list
+              else:
+                  new_scores = []
+          except Exception as e:
+              print(f'Error reading temp_scores.json: {e}')
+              new_scores = []
+
+          if not new_scores:
+              print('No new scores to process.')
+              exit(0)
+
+          # Read existing highscores
+          try:
+              if os.path.exists(HIGHSCORES_FILE):
+                  with open(HIGHSCORES_FILE, 'r') as f:
+                      content = f.read().strip()
+                      if not content:
+                          highscores = []
+                      else:
+                          highscores = json.loads(content)
+              else:
+                  highscores = []
+          except Exception as e:
+              print(f'Error reading highscores.json: {e}')
+              highscores = []
+
+          # Merge
+          # Assumptions: score object has 'name', 'score', 'difficulty'
+          combined_scores = highscores + new_scores
+
+          # Sort by score descending (higher is better)
+          # Adjust sort key if 'score' field name differs
+          combined_scores.sort(key=lambda x: x.get('score', 0), reverse=True)
+
+          # Keep top 100
+          top_scores = combined_scores[:100]
+
+          # Write Highscores
+          with open(HIGHSCORES_FILE, 'w') as f:
+              json.dump(top_scores, f, indent=2)
+
+          # Clear Temp Scores
+          with open(TEMP_FILE, 'w') as f:
+              json.dump([], f)
+          
+          print(f'Successfully merged {len(new_scores)} new scores. Total highscores: {len(top_scores)}')
+          "
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add highscores.json temp_scores.json
+          git commit -m "Update highscores" || exit 0
+          git push

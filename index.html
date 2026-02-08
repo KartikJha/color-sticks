@@ -1,119 +1,253 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Color Sticks - 2D multiplayer</title>
-    
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Learn how to play the Fun Square Game! Use the arrow keys to control the black player square and advance through levels.">
-    <meta name="keywords" content="Fun Square Game, game instructions, gaming, JavaScript game, arcade game">
-    <meta name="author" content="Kartik Jha">
-    <link rel="canonical" href="https://yourwebsite.com/game-instructions"> <!-- Replace with your actual URL -->
-    <meta property="og:title" content="Game Instructions - Fun Square Game">
-    <meta property="og:description" content="Discover how to control the black player square in the Fun Square Game and advance through the levels.">
-    <meta property="og:image" content="URL_TO_YOUR_IMAGE"> <!-- Replace with your image URL -->
-    <meta property="og:url" content="https://yourwebsite.com/game-instructions"> <!-- Replace with your actual URL -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Game Instructions - Fun Square Game">
-    <meta name="twitter:description" content="Learn how to play the Fun Square Game! Use the arrow keys to control the black player square and advance through levels.">
-    <meta name="twitter:image" content="URL_TO_YOUR_IMAGE"> <!-- Replace with your image URL -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Color Sticks - 2D multiplayer</title>
 
-    <style>
-      body {
-        background-color: darkcyan;
-        font-family: "VT323", monospace; /* Retro cartoon-like font */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-        color: white;
-      }
+  <!-- SEO Meta Tags -->
+  <meta name="description"
+    content="Learn how to play the Fun Square Game! Use the arrow keys to control the black player square and advance through levels.">
+  <meta name="keywords" content="Fun Square Game, game instructions, gaming, JavaScript game, arcade game">
+  <meta name="author" content="Kartik Jha">
+  <link rel="canonical" href="https://yourwebsite.com/game-instructions"> <!-- Replace with your actual URL -->
+  <meta property="og:title" content="Game Instructions - Fun Square Game">
+  <meta property="og:description"
+    content="Discover how to control the black player square in the Fun Square Game and advance through the levels.">
+  <meta property="og:image" content="URL_TO_YOUR_IMAGE"> <!-- Replace with your image URL -->
+  <meta property="og:url" content="https://yourwebsite.com/game-instructions"> <!-- Replace with your actual URL -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Game Instructions - Fun Square Game">
+  <meta name="twitter:description"
+    content="Learn how to play the Fun Square Game! Use the arrow keys to control the black player square and advance through levels.">
+  <meta name="twitter:image" content="URL_TO_YOUR_IMAGE"> <!-- Replace with your image URL -->
 
-      @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+  <!-- AdSense Configuration -->
+  <meta name="google-adsense-account" content="ca-pub-3120966611942001">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3120966611942001"
+    crossorigin="anonymous"></script>
 
-      .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
+  <style>
+    body {
+      background-color: darkcyan;
+      font-family: "VT323", monospace;
+      /* Retro cartoon-like font */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      color: white;
+    }
 
-      #canvas {
-        border: 2px solid black;
-        margin-bottom: 20px;
-        width: 100%;
-        max-width: 1080px;
-      }
+    @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
-      .ui-box {
-        background-color: black;
-        border: 4px solid limegreen;
-        width: 90%;
-        max-width: 300px;
-        padding: 30px;
-        box-shadow: 0 0 20px limegreen;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-      }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-      .ui-box h2, .ui-box p, .ui-box .warning {
-        display: block;
-        color: limegreen;
-      }
+    #canvas {
+      border: 2px solid black;
+      margin-bottom: 20px;
+      width: 100%;
+      max-width: 1080px;
+    }
 
+    .ui-box {
+      background-color: black;
+      border: 4px solid limegreen;
+      width: 90%;
+      max-width: 300px;
+      padding: 30px;
+      box-shadow: 0 0 20px limegreen;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .ui-box h2,
+    .ui-box p,
+    .ui-box .warning {
+      display: block;
+      color: limegreen;
+    }
+
+    .ui-box .warning {
+      color: red;
+      margin-top: 20px;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    /* Hide instructions and show "Not for mobile devices" on mobile */
+    @media (max-width: 768px) {
+
+      .ui-box h2,
+      .ui-box p,
       .ui-box .warning {
+        display: none;
+        /* Hide game instructions */
+      }
+
+      .ui-box::before {
+        content: "Not for mobile devices, please use a laptop or desktop with physical input support";
+        /* Display message for mobile */
         color: red;
-        margin-top: 20px;
         font-size: 22px;
         font-weight: bold;
       }
+    }
 
-      /* Hide instructions and show "Not for mobile devices" on mobile */
-      @media (max-width: 768px) {
-        .ui-box h2, .ui-box p, .ui-box .warning {
-          display: none; /* Hide game instructions */
-        }
-        .ui-box::before {
-          content: "Not for mobile devices, please use a laptop or desktop with physical input support"; /* Display message for mobile */
-          color: red;
-          font-size: 22px;
-          font-weight: bold;
-        }
+    /* Responsive design for larger screens */
+    @media (min-width: 768px) {
+      .container {
+        flex-direction: row;
       }
 
-      /* Responsive design for larger screens */
-      @media (min-width: 768px) {
-        .container {
-          flex-direction: row;
-        }
-        #canvas {
-          margin-right: 20px;
-          margin-bottom: 0;
-          margin-top: 0px;
-        }
-        .ui-box {
-          width: 300px;
-        }
+      #canvas {
+        margin-right: 20px;
+        margin-bottom: 0;
+        margin-top: 0px;
       }
-    </style>
+
+      .ui-box {
+        width: 300px;
+      }
+
+      .ui-box {
+        width: 300px;
+      }
+    }
+
+    /* Start Screen & Overlay Styles */
+    #game-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .game-title {
+      font-size: 60px;
+      color: limegreen;
+      margin-bottom: 30px;
+      text-shadow: 0 0 10px limegreen;
+    }
+
+    .input-group {
+      margin: 15px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    input,
+    select {
+      padding: 10px;
+      font-family: "VT323", monospace;
+      font-size: 24px;
+      background: #000;
+      color: limegreen;
+      border: 2px solid limegreen;
+      margin-top: 5px;
+      width: 250px;
+      text-align: center;
+    }
+
+    button {
+      padding: 10px 30px;
+      font-family: "VT323", monospace;
+      font-size: 28px;
+      background: black;
+      color: limegreen;
+      border: 2px solid limegreen;
+      cursor: pointer;
+      margin: 10px;
+      transition: all 0.2s;
+    }
+
+    button:hover {
+      background: limegreen;
+      color: black;
+      box-shadow: 0 0 15px limegreen;
+    }
+
+    #hud {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 32px;
+      color: white;
+      text-shadow: 2px 2px 0 #000;
+      pointer-events: none;
+    }
+  </style>
 </head>
-<body>
-    <div class="container">
-      <canvas id="canvas" width="1080" height="800"></canvas>
 
-      <div class="ui-box">
-        <h2>Game Instructions</h2>
-        <p>The black player square will move down automatically. Once it crosses the bottom line, the player will advance to the next level.</p>
-        <p>Use the <strong>left</strong>, <strong>right</strong>, and <strong>down</strong> arrow keys to control the player.</p>
-        <p class="warning">Collisions are not detected yet, but the developer is working on it!</p>
-      </div>
+<body>
+  <div class="container">
+    <!-- HUD -->
+    <div id="hud" class="hidden">
+      Score: <span id="score-display">0</span> | Level: <span id="level-display">1</span>
     </div>
 
-    <script type="text/javascript" src="bundle.js"></script>
+    <!-- Canvas -->
+    <canvas id="canvas" width="1080" height="800"></canvas>
+
+    <!-- Game Overlay (Start Screen / Game Over / Leaderboard) -->
+    <div id="game-overlay">
+      <h1 class="game-title">COLOR STICKS</h1>
+
+      <div id="start-menu">
+        <div class="input-group">
+          <label for="player-name">ENTER NAME</label>
+          <input type="text" id="player-name" placeholder="PLAYER 1" maxlength="10">
+        </div>
+
+        <div class="input-group">
+          <label for="difficulty">DIFFICULTY</label>
+          <select id="difficulty">
+            <option value="easy">EASY</option>
+            <option value="medium" selected>MEDIUM</option>
+            <option value="hard">HARD</option>
+          </select>
+        </div>
+
+        <button id="start-btn">START GAME</button>
+        <button id="leaderboard-btn">LEADERBOARD</button>
+
+        <div class="ui-box" style="margin-top: 30px; background: transparent; border: none; box-shadow: none;">
+          <p>Use ARROW KEYS to move.</p>
+          <p>Avoid the sticks!</p>
+        </div>
+      </div>
+
+      <div id="leaderboard-menu" class="hidden">
+        <h2>TOP SCORES</h2>
+        <div id="scores-list">Loading...</div>
+        <button id="back-btn">BACK</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="bundle.js"></script>
 </body>
+
 </html>

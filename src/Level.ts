@@ -110,21 +110,35 @@ class Level {
       [{ x: 400, y: 800 }, 80, -3]
     ]
   ];
-  
-  private currentLevel: number = 0
-  
+
+  private currentLevel: number = 0;
+  private difficultyMultiplier: number = 1;
+
   private setColorSticks(currentLevel: number): void {
+    let stickCount = this.levelList[currentLevel].length;
+    // Adjust count for difficulty (simplified: Hard adds 1 stick if possible, Easy removes 1)
+    // For now, let's strictly scale SPEED.
+
     this.listOfColorStick = this.levelList[currentLevel].map(
-      colorStickConfig =>
-        new ColorStick(
+      colorStickConfig => {
+        const baseSpeed = colorStickConfig[2] as number;
+        const adjustedSpeed = baseSpeed * this.difficultyMultiplier;
+
+        return new ColorStick(
           colorStickConfig[0] as Position,
           colorStickConfig[1] as number,
-          colorStickConfig[2] as number
+          adjustedSpeed
         )
+      }
     )
   }
 
-  public constructor(currentLevel: number = 0) {
+  public constructor(currentLevel: number = 0, difficulty: string = 'medium') {
+    switch (difficulty) {
+      case 'easy': this.difficultyMultiplier = 0.7; break;
+      case 'hard': this.difficultyMultiplier = 1.5; break;
+      default: this.difficultyMultiplier = 1;
+    }
     this.setColorSticks(currentLevel);
   }
 
@@ -136,12 +150,13 @@ class Level {
     if (nextLevel != -1) {
       this.setColorSticks(nextLevel);
       return this;
-    } 
+    }
     if (this.currentLevel + 1 < this.levelList.length) {
       this.setColorSticks(this.currentLevel + 1)
       this.currentLevel++;
       return this;
     }
+    return this; // Return self even if max level to prevent crash
   }
 
 }
